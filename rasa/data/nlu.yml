@@ -134,5 +134,30 @@ nlu:
     - what is the expected distence this car will go 
     - what is the expected travel distence i can go in my electric vehicle
 
+- intent: filter_station
+  examples: |
+    - show me fast-charging stations
+    - I want the cheapest option
+    - any free charging stations?
+    - do you have Tesla superchargers?
+    - I prefer fast charging
+    - I only want ultra-fast chargers
+    - which ones are free?
+    - show only stations with pricing under $0.30/kWh
+    - I want a station that is free
 
+- intent: traffic_info
+  examples: |
+    - how's the traffic near the station?
+    - suggest the station with least traffic
+    - avoid heavy traffic routes
+    - recommend a low-traffic station
+    - which station is fastest to reach now?
+    - where's the best option considering traffic?
 
+- intent: out_of_scope
+  examples: |
+    - can you play music?
+    - what's the weather today?
+    - tell me a joke
+    - who won the game?

@@ -48,7 +48,7 @@ class ActionGetNearestStation(Action):
         return []
     
 
-class ActionToStation(Action):
+class ActionToChargingStation(Action):
 
     def name(self) -> Text:
         return "Action_To_Charging_Station" 
@@ -75,7 +75,7 @@ class ActionToStation(Action):
 
 
 
-class ActionToStation(Action):
+class ActionHowLongToCharge(Action):
 
     def name(self) -> Text:
         return "Action_How_Long_To_Charge" 
@@ -88,7 +88,7 @@ class ActionToStation(Action):
         
         return []
     
-class ActionToStation(Action):
+class ActionDistanceICanGo(Action):
 
     def name(self) -> Text:
         return "Action_Distence_I_Can_Go" 
@@ -99,4 +99,48 @@ class ActionToStation(Action):
         dispatcher.utter_message(text="depending on your car and driving style. you can expect between. 320 to 480km on a full charge")
         
         
+        return []
+
+    
+
+class ActionFilterStations(Action):
+
+    def name(self) -> Text:
+        return "Action_Filter_Stations"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        filter_preferences = tracker.get_slot("filter_preferences")
+
+        if filter_preferences:
+            dispatcher.utter_message(text=f"Filtering stations based on your preference: {filter_preferences}")
+        else:
+            dispatcher.utter_message(text="No filter preferences found. Showing all stations.")
+        
+        return []
+
+
+
+
+
+class ActionTrafficInfo(Action):
+
+    def name(self) -> Text:
+        return "Action_Traffic_Info"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="Sorry, I couldn't fetch traffic information at the moment. Please try again later.")
+        return []
+
+
+
+
+
+
+class ActionDefaultFallback(Action):
+
+    def name(self) -> Text:
+        return "action_default_fallback"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="Sorry, I didn't get that. Can you rephrase?")
         return []
