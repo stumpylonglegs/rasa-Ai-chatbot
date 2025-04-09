@@ -101,12 +101,28 @@ nlu:
 
 - intent: To_Charging_Station 
   examples: |
-    - take me to the [glenwaverly](place)station 
+    - take me to the [glenwaverly](place) station 
     - where is the charging station in [vermount south](place)?
     - i need the [ferntree gully](place) station
     - i need a charging station from [boxhill](place)
     - take me to the [mount waverly](place) charging station
     - im low on power i need a charging station in[clayton](place)
+    - take me to the [mooroolbark](place) station
+    - where is the charging station in [sassafras](place)?
+    - i need a charging station from [upwey](place)
+    - get me to the [st kilda](place) charging station
+    - take me to the [brighton](place) station
+    - where is the charging station in [moorabbin](place)?
+    - i need a charging station from [beaconsfield](place)
+    - get me to the [sandgurst](place) charging station
+    - take me to the [skye](place) station
+    - where is the charging station in [devon meadows](place)?
+    - i need a charging station from [mornington](place)
+    - get me to the [dromana](place) charging station
+    - take me to the [drysdale](place) charging station
+    - take me to the [buckly](place) charging station
+    - take me to the [breamlea](place) charging station
+    - take me to the [werribee](place) charging station
 - lookup: place
   examples: |
     - glenwaverly
