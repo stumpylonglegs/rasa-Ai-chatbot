@@ -8,7 +8,7 @@ MAX_ITERATIONS = 3  # Maximum number of iterations to avoid excessive API calls
 TOMTOM_API_KEY = "2p4OcGzjWEPmyw09G5I1hIDiwdX0Fd6i"
 
 # Function to get route details from TomTom API
-def get_route_details(USER_LOCATION, destination, TOMTOM_API_KEY):
+def get_route_details(USER_LOCATION, destination, TOMTOM_API_KEY=TOMTOM_API_KEY):
     try:
         url = f"https://api.tomtom.com/routing/1/calculateRoute/{USER_LOCATION[1]},{USER_LOCATION[0]}:{destination[1]},{destination[0]}/json"
         params = {
@@ -50,7 +50,7 @@ def get_route_details(USER_LOCATION, destination, TOMTOM_API_KEY):
         return None
 
 # Function to fetch charging station availability
-def get_charging_station_availability(station_id, TOMTOM_API_KEY):
+def get_charging_station_availability(station_id, TOMTOM_API_KEY=TOMTOM_API_KEY):
     try:
         url = "https://api.tomtom.com/search/2/chargingAvailability.json"
         params = {
@@ -80,7 +80,7 @@ def get_charging_station_availability(station_id, TOMTOM_API_KEY):
 
 
 # Function to get nearby charging stations from TomTom API
-def get_nearby_stations(USER_LOCATION, TOMTOM_API_KEY):
+def get_nearby_stations(USER_LOCATION, NUMBER_OF_RESULTS=NUMBER_OF_RESULTS, TOMTOM_API_KEY=TOMTOM_API_KEY):
     try:
         url = f"https://api.tomtom.com/search/2/nearbySearch/.json"
         params = {

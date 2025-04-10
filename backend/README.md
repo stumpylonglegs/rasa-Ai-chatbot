@@ -66,3 +66,33 @@ This Python module helps find the **closest available EV charging station** base
 
 You’ll get all the data you need from the output dict. Just call the function, pass the current user location, and render the output as needed.
 
+## Further uses
+
+You can also use the individual functions in the module if needed as follows
+
+```python
+
+   get_nearby_stations(user_location, <optional> NUMBER_OF_RESULTS=x)
+   # returns a specified number of nearest charging stations as a json response, default = 5
+
+   get_route_details(user_location, destination)
+   # returns route in the following format
+   # {
+   #    "distance_km": distance_km,
+   #    "eta_minutes": eta_minutes,
+   #    "instructions": instructions,
+   #    "full_json": data
+   # }
+
+   get_charging_station_availability(station_id)
+   # returns number of available chargers at the specified charging station
+   # the station_id needed for this can only be retreived from TomTom's nearby search API
+
+```
+
+## APIs used
+
+Search API: https://developer.tomtom.com/search-api/api-explorer
+Availability API: https://developer.tomtom.com/ev-charging-stations-availability-api/api-explorer
+Routing API: https://developer.tomtom.com/routing-api/api-explorer
+
