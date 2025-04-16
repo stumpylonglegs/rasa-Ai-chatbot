@@ -94,5 +94,10 @@ stories:
     - intent: nlu_fallback
     - action: utter_default
 
+- story: get information
+  steps:
+    - intent: charger_info
+    - action: Action_charger_info
+
 
   

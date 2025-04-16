@@ -44,7 +44,8 @@ class ActionGetNearestStation(Action):
         return "Action_Get_Nearest_Station"  
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        user_location = (145.1645742319033, -37.86402143314729)
+        user_location = (145.07707698143594, -37.95492963570252)
+        
         dispatcher.utter_message(text="I am fetching the nearest station information.")
         result = find_station(user_location)
         
@@ -58,6 +59,7 @@ class ActionGetNearestStation(Action):
         
         split = result["Address"].split(",")
         suburb = split[1].strip()
+        print(result)
         print(suburb)
         
         return [SlotSet("suburb", suburb)]
