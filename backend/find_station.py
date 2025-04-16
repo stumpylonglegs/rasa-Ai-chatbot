@@ -5,7 +5,7 @@ from math import radians, sin, cos, sqrt, atan2
 # Fixed options for limiting number of API calls
 NUMBER_OF_RESULTS = 5  # Number of closest results to fetch per iteration
 MAX_ITERATIONS = 3  # Maximum number of iterations to avoid excessive API calls
-TOMTOM_API_KEY = "2p4OcGzjWEPmyw09G5I1hIDiwdX0Fd6i"
+TOMTOM_API_KEY = ""
 
 # Function to get route details from TomTom API
 def get_route_details(USER_LOCATION, destination, TOMTOM_API_KEY=TOMTOM_API_KEY):
