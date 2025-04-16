@@ -10,6 +10,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
+from backend.find_station import find_station
 
 
 # This is a simple example for a custom action which utters "Hello World!"
@@ -41,10 +42,14 @@ class ActionGetNearestStation(Action):
         return "Action_Get_Nearest_Station"  
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        user_location = (145.1645742319033, -37.86402143314729)
         dispatcher.utter_message(text="I am fetching the nearest station information.")
-        dispatcher.utter_message(text=".")
-        dispatcher.utter_message(text=".")
-        dispatcher.utter_message(text="done.")
+        result = find_station(user_location)
+        print(result)
+        dispatcher.utter_message(text=str(result))
+        
+        
+        
         return []
     
 
