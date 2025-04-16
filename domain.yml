@@ -16,6 +16,7 @@ intents:
   - traffic_info
   - out_of_scope
   - nlu_fallback
+  - charger_info
 
 entities: 
   - place
@@ -26,6 +27,13 @@ slots:
       mappings:
         - type: from_entity
           entity: place
+  suburb:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+
 
   filter_preferences:
     type: text
@@ -79,6 +87,7 @@ actions:
   - Action_Filter_Stations
   - Action_Traffic_Info
   - action_default_fallback
+  - Action_charger_info
 
 session_config:
   session_expiration_time: 60

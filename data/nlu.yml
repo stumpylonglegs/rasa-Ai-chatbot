@@ -177,3 +177,13 @@ nlu:
     - what's the weather today?
     - tell me a joke
     - who won the game?
+
+- intent: charger_info
+  examples: |
+    - what is the information about these chargers
+    - what type of information does this charger have
+    - will my charger surpport my car.
+    - how much will this charger cost.
+    - what is the power output of the charger. 
+    - i would like info about the charging station     
+    - no i would like information about this charging station  

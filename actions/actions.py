@@ -11,6 +11,8 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
 from backend.find_station import find_station
+from backend.find_station import get_charging_station_availability
+import pandas as pd
 
 
 # This is a simple example for a custom action which utters "Hello World!"
@@ -45,12 +47,20 @@ class ActionGetNearestStation(Action):
         user_location = (145.1645742319033, -37.86402143314729)
         dispatcher.utter_message(text="I am fetching the nearest station information.")
         result = find_station(user_location)
-        print(result)
-        dispatcher.utter_message(text=str(result))
         
         
         
-        return []
+        dispatcher.utter_message(text=f"It is located at {result['Address']}")
+        dispatcher.utter_message(text=f"It’s about {result['Distance']} KM away")
+        dispatcher.utter_message(text=f"this will take about {result['ETA']} minutes")
+        dispatcher.utter_message("Would you like directions?")
+        
+        
+        split = result["Address"].split(",")
+        suburb = split[1].strip()
+        print(suburb)
+        
+        return [SlotSet("suburb", suburb)]
     
 
 class ActionToChargingStation(Action):
@@ -61,17 +71,27 @@ class ActionToChargingStation(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+
+        suburb = tracker.get_slot("suburb")
         station = list(tracker.get_latest_entity_values("place"))
+        
+        
+        
 
         if station:
             
             station_name = station[0]  
             dispatcher.utter_message(text=f"I understand. Taking you to the {station_name} charging station.")
+            suburb = station_name
+        elif suburb:
+            dispatcher.utter_message(text=f"I understand. Taking you to the {suburb} charging station.")
+            dispatcher.utter_message(text=f"I understand. Taking you to the {suburb} charging station.")
+            dispatcher.utter_message(text=f"I understand. Taking you to the {suburb} charging station.")
         else:
             
             dispatcher.utter_message(text="i did not extract a location")
         
-        return []
+        return [SlotSet("suburb", suburb)]
     
 
        
@@ -148,4 +168,39 @@ class ActionDefaultFallback(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="Sorry, I didn't get that. Can you rephrase?")
+        return []
+    
+
+class ActionDefaultFallback(Action):
+
+    def name(self) -> Text:
+        return "Action_charger_info"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        df = pd.read_csv("charger_info_mel.csv")
+        df = df.astype(str)
+        suburb = tracker.get_slot("suburb")
+        
+        
+        
+        dispatcher.utter_message(text="Sure, here are important information about the charging station.")
+        
+        
+        charging_station = df[df["City"].str.strip().str.lower() == suburb.strip().lower()]
+        print(suburb)
+        print(charging_station)
+            
+        if not charging_station.empty:
+            station_info = charging_station.iloc[0]  
+
+            dispatcher.utter_message(text=f"Suburb: {station_info['City']}")
+            dispatcher.utter_message(text=f"Power output: {station_info['Power (kW)']} kW")
+            dispatcher.utter_message(text=f"Usage costs: {station_info['Usage Cost']}")
+            dispatcher.utter_message(text=f"Total charges: {station_info['Number of Points']}")
+            dispatcher.utter_message(text=f"Connection type: {station_info['Connection Types']}")
+            #get_charging_station_availability()
+        else:
+            dispatcher.utter_message(text=f"sorry we are unable to get details from the {suburb} charging station")
+            
+        
         return []

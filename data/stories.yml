@@ -30,10 +30,20 @@ stories:
   - action: utter_goodbye
 
 
-- story: Nearest Station Story
+- story: Neares station and direction 
   steps:
     - intent: ask_for_nearest_station
     - action: Action_Get_Nearest_Station
+    - intent: affirm 
+    - action: Action_To_Charging_Station
+
+- story: Nearest Station and information. 
+  steps:
+    - intent: ask_for_nearest_station
+    - action: Action_Get_Nearest_Station
+    - intent: charger_info
+    - action: Action_charger_info
+    
 
 - story: To_Charging_Station 
   steps: 
@@ -83,3 +93,6 @@ stories:
   steps:
     - intent: nlu_fallback
     - action: utter_default
+
+
+  
