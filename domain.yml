@@ -27,7 +27,7 @@ slots:
       mappings:
         - type: from_entity
           entity: place
-  suburb:
+  Charger Name:
     type: text
     influence_conversation: false
     mappings:
