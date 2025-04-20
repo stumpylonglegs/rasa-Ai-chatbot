@@ -1,10 +1,16 @@
 import find_station
 import json
+import geocoder
+
 
 # Main execution
 if __name__ == "__main__":
-    # User location ; using Melbourne City Center coordinates
-    USER_LOCATION = (144.931, -37.9) # (longitutde, latitude)
+   # Get the location based on IP address
+   location = geocoder.ip("me") 
+   # User location
+   USER_LOCATION = (location.lng, location.lat) # (longitutde, latitude)
+
+
 
     # TomTom API key
     TOMTOM_API_KEY = "2p4OcGzjWEPmyw09G5I1hIDiwdX0Fd6i"
