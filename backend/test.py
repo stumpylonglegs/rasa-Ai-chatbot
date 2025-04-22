@@ -5,10 +5,10 @@ import geocoder
 
 # Main execution
 if __name__ == "__main__":
-   # Get the location based on IP address
-   location = geocoder.ip("me") 
-   # User location
-   USER_LOCATION = (location.lng, location.lat) # (longitutde, latitude)
+    # Get the location based on IP address
+    location = geocoder.ip("me") 
+    # User location
+    USER_LOCATION = (location.lng, location.lat) # (longitutde, latitude)
 
 
 
