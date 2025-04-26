@@ -43,25 +43,35 @@ class ActionGetNearestStation(Action):
     def name(self) -> Text:
         return "Action_Get_Nearest_Station"  
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        user_location = (145.20774891739796, -37.82098535583897)
-         
-        dispatcher.utter_message(text="I am fetching the nearest station information.")
-        result = find_station(user_location)
+    async def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Retrieve the latest message's metadata, it shoiuld have latitude and longitude
+        metadata = tracker.latest_message.get('metadata', {})
+
+        latitude = metadata.get("lat")
+        longitude = metadata.get("lon")
         
-        
-        
-        dispatcher.utter_message(text=f"It is located at {result['Address']}")
-        dispatcher.utter_message(text=f"It’s about {result['Distance']} KM away")
-        dispatcher.utter_message(text=f"this will take about {result['ETA']} minutes")
-        dispatcher.utter_message("Would you like directions?")
-        
-        
-        
-        Charger_Name = result["Name"]
-        print(Charger_Name)
-        
-        return [SlotSet("Charger Name", Charger_Name)]
+        user_location = (longitude, latitude)
+
+        if latitude and longitude:
+
+            dispatcher.utter_message(text="I am fetching the nearest station information.")
+            result = find_station(user_location)
+
+            if result:            
+                
+                dispatcher.utter_message(text=f"Your closest charging station is {result['Name']}")
+                dispatcher.utter_message(text=f"It is located at {result['Address']}")
+                dispatcher.utter_message(text=f"It is about {result['Distance']} KM away")
+                dispatcher.utter_message(text=f"This will take you about {result['ETA']} minutes")
+                dispatcher.utter_message("Would you like directions?")
+                
+                return [SlotSet("Charger Name", result['Name'])] 
+            else:
+                dispatcher.utter_message("Sorry, no charger is currently available in your location")
+        else:
+            # No location available
+            dispatcher.utter_message("Sorry, I couldn't retrieve your location.")
+            return []
     
 
 class ActionToChargingStation(Action):
