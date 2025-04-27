@@ -124,17 +124,8 @@ nlu:
     - take me to the [breamlea](place) charging station
     - take me to the [werribee](place) charging station
 - lookup: place
-  examples: |
-    - glenwaverly
-    - vermount south
-    - ferntree gully
-    - boxhill
-    - mount waverly
-    - clayton
-    - springvale
-    - dingly
-    - doveton
-    - ringwood
+   data/city_names.txt
+    
 
 - intent: How_Long_To_Charge
   examples: |

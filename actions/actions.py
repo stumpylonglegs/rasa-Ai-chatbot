@@ -49,9 +49,16 @@ class ActionGetNearestStation(Action):
 
         latitude = metadata.get("lat")
         longitude = metadata.get("lon")
+
+        if not latitude and not longitude:
+            latitude = -37.85580046992546
+            longitude = 145.08025857057336
+            # manual location due to geocoder not getting my location -37.85580046992546, 145.08025857057336
+
+        
         
         user_location = (longitude, latitude)
-
+        
         if latitude and longitude:
 
             dispatcher.utter_message(text="I am fetching the nearest station information.")
@@ -83,26 +90,18 @@ class ActionToChargingStation(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
 
-        suburb = tracker.get_slot("Charger Name")
+        
         station = list(tracker.get_latest_entity_values("place"))
-        
-        
-        
 
         if station:
             
             station_name = station[0]  
             dispatcher.utter_message(text=f"I understand. Taking you to the {station_name} charging station.")
-            suburb = station_name
-        elif suburb:
-            dispatcher.utter_message(text=f"I understand. Taking you to the {suburb} charging station.")
-            dispatcher.utter_message(text=f"I understand. Taking you to the {suburb} charging station.")
-            dispatcher.utter_message(text=f"I understand. Taking you to the {suburb} charging station.")
         else:
             
             dispatcher.utter_message(text="i did not extract a location")
         
-        return [SlotSet("Charger Name", suburb)]
+        return []
     
 
        
@@ -111,7 +110,7 @@ class ActionToChargingStation(Action):
 
 
 
-class ActionHowLongToCharge(Action):
+class ActionHowLongToCharge(Action): 
 
     def name(self) -> Text:
         return "Action_How_Long_To_Charge" 
