@@ -72,7 +72,7 @@ class ActionGetNearestStation(Action):
                 dispatcher.utter_message(text=f"This will take you about {result['ETA']} minutes")
                 dispatcher.utter_message("Would you like directions?")
                 
-                return [SlotSet("Charger Name", result['Name'])] 
+                return [SlotSet("Charger Name", result['Address'])] 
             else:
                 dispatcher.utter_message("Sorry, no charger is currently available in your location")
         else:
@@ -187,17 +187,19 @@ class ActionDefaultFallback(Action):
         return "Action_charger_info"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        df = pd.read_csv("charger_info_mel.csv")
+        df = pd.read_csv("datasets/charger_info_mel.csv")
         df = df.astype(str)
-        Charger_Name = tracker.get_slot("Charger Name")
+        address = tracker.get_slot("Charger Name")
         
         
         
         dispatcher.utter_message(text="Sure, here are important information about the charging station.")
         
         
-        charging_station = df[df["Charger Name"].str.strip().str.lower() == Charger_Name.strip().lower()]
-        print(Charger_Name)
+        charging_station = df[df["Address"].str.strip().str.lower() == address.strip().lower()]
+        print(address)
+        print(address)
+        print(address)
         print(charging_station)
             
         if not charging_station.empty:
@@ -210,7 +212,7 @@ class ActionDefaultFallback(Action):
             dispatcher.utter_message(text=f"Connection type: {station_info['Connection Types']}")
             #get_charging_station_availability()
         else:
-            dispatcher.utter_message(text=f"sorry we are unable to get details from the {Charger_Name} charging station")
+            dispatcher.utter_message(text=f"sorry we are unable to get details from the {address} charging station")
             
         
         return []
