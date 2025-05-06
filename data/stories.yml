@@ -2,40 +2,12 @@ version: "3.1"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
-
-
 - story: Neares station and direction 
   steps:
-    - intent: ask_for_nearest_station
+    - intent: Nearest_Charging_Station
     - action: Action_Get_Nearest_Station
     - intent: affirm 
-    - action: Action_To_Charging_Station
+    - action: Get_Directions_action
 
 - story: Nearest Station and information. 
   steps:

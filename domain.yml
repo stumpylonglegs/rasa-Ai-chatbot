@@ -88,6 +88,7 @@ actions:
   - Action_Traffic_Info
   - action_default_fallback
   - Action_charger_info
+  - Get_Directions_action
 
 session_config:
   session_expiration_time: 60

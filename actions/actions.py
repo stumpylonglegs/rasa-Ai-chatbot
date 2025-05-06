@@ -216,3 +216,40 @@ class ActionDefaultFallback(Action):
             
         
         return []
+    
+
+class ActionDefaultFallback(Action):
+
+    def name(self) -> Text:
+        return "Get_Directions_action"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        
+
+        metadata = tracker.latest_message.get('metadata', {})
+
+        latitude = metadata.get("lat")
+        longitude = metadata.get("lon")
+
+        if not latitude and not longitude:
+            latitude = -37.85580046992546
+            longitude = 145.08025857057336
+            # manual location due to geocoder not getting my location -37.85580046992546, 145.08025857057336
+
+        
+        
+        user_location = (longitude, latitude)
+
+        result = find_station(user_location)
+        dispatcher.utter_message(text=f"Your closest charging station is {result['Instructions']}")
+        
+        if "Instructions" in result:
+            print("\nInstructions:")
+            for i, instruction in enumerate(result["Instructions"], start=1):
+                print(f"{i}. {instruction}")
+
+
+        print(result)
+
+        return []
