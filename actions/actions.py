@@ -11,6 +11,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
 from backend.find_station import find_station
+from backend.find_station import get_route_details
 from backend.find_station import get_charging_station_availability
 import pandas as pd
 
@@ -86,21 +87,63 @@ class ActionToChargingStation(Action):
     def name(self) -> Text:
         return "Action_To_Charging_Station" 
     
+    
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-
-        
         station = list(tracker.get_latest_entity_values("place"))
+        metadata = tracker.latest_message.get('metadata', {})
 
+        latitude = metadata.get("lat")
+        longitude = metadata.get("lon")
+
+        if not latitude and not longitude:
+            latitude = -37.85580046992546
+            longitude = 145.08025857057336
+            # manual location due to geocoder not getting my location -37.85580046992546, 145.08025857057336
+
+
+        df = pd.read_csv("datasets/Co-oridnates.csv")
+        df = df.astype(str)
+        charging_station = df[df["suburb"].str.strip().str.lower() == station[0]]
+        station_info = charging_station.iloc[0]
+        
+        destination = (station_info['longitude'], station_info['latitude'])
+       
+        
+    
+        user_location = (longitude, latitude,)
         if station:
-            
+
+
             station_name = station[0]  
             dispatcher.utter_message(text=f"I understand. Taking you to the {station_name} charging station.")
+            result = get_route_details(user_location, destination)
+
+            if result:
+                    directions = result["instructions"]
+                    for step in directions:
+                     print(step)
+            else:
+                print("Could not retrieve route directions.")
+            
+            
+
         else:
             
             dispatcher.utter_message(text="i did not extract a location")
         
+
+
+
+
+
+
+
+
+
+
+
         return []
     
 
