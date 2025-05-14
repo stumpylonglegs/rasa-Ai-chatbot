@@ -20,6 +20,8 @@ df.dropna(inplace=True)
 le = LabelEncoder()
 df['Station_Encoded'] = le.fit_transform(df['Station_Name'])
 
+#################REGRESSION MODEL#######################
+
 # derive haversine distance as a feature
 def haversine(lat1, lon1, lat2, lon2):
     R = 6371  # Earth radius in km
@@ -69,3 +71,5 @@ def regression_results(y_true, y_pred, model_name):
 regression_results(y_test_reg, y_pred_lr, "Linear")
 regression_results(y_test_reg, y_pred_rf, "Random Forest")
 regression_results(y_test_reg, y_pred_xgb, "XGBoost")
+
+
