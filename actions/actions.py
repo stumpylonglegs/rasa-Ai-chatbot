@@ -123,7 +123,7 @@ class ActionToChargingStation(Action):
             if result:
                     directions = result["instructions"]
                     for step in directions:
-                     print(step)
+                     dispatcher.utter_message(text=(step))
             else:
                 print("Could not retrieve route directions.")
             
@@ -224,7 +224,7 @@ class ActionDefaultFallback(Action):
         return []
     
 
-class ActionDefaultFallback(Action):
+class ActionChargerInfo(Action):
 
     def name(self) -> Text:
         return "Action_charger_info"
@@ -290,7 +290,7 @@ class ActionDefaultFallback(Action):
         if "Instructions" in result:
             print("\nInstructions:")
             for i, instruction in enumerate(result["Instructions"], start=1):
-                print(f"{i}. {instruction}")
+                dispatcher.utter_message(text=(f"{i}. {instruction}"))
 
 
         print(result)
