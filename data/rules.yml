@@ -19,7 +19,7 @@ rules:
   - action: Action_Get_Nearest_Station
 
 - rule: To Charging Station
-  steps:
+  steps: 
   - intent: To_Charging_Station 
   - action: Action_To_Charging_Station
 
