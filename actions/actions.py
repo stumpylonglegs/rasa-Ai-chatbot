@@ -7,7 +7,7 @@
 import arrow
 import dateparser
 from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, SessionStarted, ActionExecuted
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
 from backend.find_station import find_station
@@ -38,6 +38,19 @@ import pandas as pd
 #         return []
 
 
+class chat_start_message(Action):
+
+    def name(self) -> Text:
+        return "action_start_conversation"
+    
+    async def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+   
+
+        dispatcher.utter_message(text="welcome! what can i do for you today!")
+
+      
+        return []
 
 class ActionGetNearestStation(Action):
 
