@@ -16,6 +16,8 @@ from backend.find_station import get_charging_station_availability
 import pandas as pd
 
 
+
+
 # This is a simple example for a custom action which utters "Hello World!"
 
 # from typing import Any, Text, Dict, List
@@ -38,19 +40,17 @@ import pandas as pd
 #         return []
 
 
-class chat_start_message(Action):
 
-    def name(self) -> Text:
-        return "action_start_conversation"
-    
-    async def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+location_of_station = ""
+user_latidude = 0
+user_longitude = 0
+charger_preference = []
+speed_preference = []
+battery_capacity = 0
+battery_charge_amount = []
+average_car_output = 0
 
-   
 
-        dispatcher.utter_message(text="welcome! what can i do for you today!")
-
-      
-        return []
 
 class ActionGetNearestStation(Action):
 
@@ -243,6 +243,13 @@ class ActionChargerInfo(Action):
         return "Action_charger_info"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+
+
+        if location_of_station == "":
+            dispatcher.utter_message(text="please tell us a location you would like information for!!")
+            return []
+
         df = pd.read_csv("datasets/charger_info_mel.csv")
         df = df.astype(str)
         address = tracker.get_slot("Charger Name")

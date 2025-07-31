@@ -60,6 +60,7 @@ responses:
   utter_did_that_help:
   - text: "Did that help you?"
 
+
   utter_happy:
   - text: "Great, carry on!"
 
@@ -89,7 +90,6 @@ actions:
   - action_default_fallback
   - Action_charger_info
   - Get_Directions_action
-  - action_start_conversation
 
 session_config:
   session_expiration_time: 60
