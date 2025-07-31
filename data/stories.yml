@@ -3,9 +3,7 @@ version: "3.1"
 stories:
 
 
-- story: start conversation
-  steps:
-    - action: action_start_conversation
+
 
 - story: Neares station and direction 
   steps:

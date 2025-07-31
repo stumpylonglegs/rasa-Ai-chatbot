@@ -1,0 +1,76 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "Ask_How_Long_To_Charge": 0,
+        "Distence_I_Can_Go": 1,
+        "How_Long_To_Charge": 2,
+        "Nearest_Charging_Station": 3,
+        "To_Charging_Station": 4,
+        "affirm": 5,
+        "ask_To_Station": 6,
+        "ask_for_nearest_station": 7,
+        "back": 8,
+        "bot_challenge": 9,
+        "deny": 10,
+        "filter_station": 11,
+        "goodbye": 12,
+        "greet": 13,
+        "mood_great": 14,
+        "mood_unhappy": 15,
+        "nlu_fallback": 16,
+        "out_of_scope": 17,
+        "restart": 18,
+        "session_start": 19,
+        "traffic_info": 20
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "Action_Get_Nearest_Station": 13,
+        "Action_To_Charging_Station": 14,
+        "Action_How_Long_To_Charge": 15,
+        "Action_Distence_I_Can_Go": 16,
+        "Action_Filter_Stations": 17,
+        "Action_Traffic_Info": 18,
+        "Action_charger_info": 19,
+        "Get_Directions_action": 20,
+        "utter_cheer_up": 21,
+        "utter_default": 22,
+        "utter_did_that_help": 23,
+        "utter_goodbye": 24,
+        "utter_great_choice": 25,
+        "utter_greet": 26,
+        "utter_happy": 27,
+        "utter_iamabot": 28,
+        "utter_no_traffic_info": 29
+      },
+      "entities": {
+        "place": 0
+      },
+      "slots": {
+        "location_0": 0,
+        "filter_preferences_0": 1,
+        "traffic_aware_0": 2,
+        "traffic_aware_1": 3
+      },
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}

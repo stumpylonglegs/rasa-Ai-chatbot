@@ -15,39 +15,72 @@ intents:
   - filter_station
   - traffic_info
   - out_of_scope
-  - nlu_fallback
-  - charger_info
+  - ask_for_nearest_station
+  - ask_To_Station
+  - Ask_How_Long_To_Charge
 
-entities: 
-  - place
 slots:
   location:
-      type: text
-      influence_conversation: true
-      mappings:
-        - type: from_entity
-          entity: place
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: place
+
   Charger Name:
     type: text
     influence_conversation: false
     mappings:
       - type: custom
 
-
-
-  filter_preferences:
+  location_of_station:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
-      - type: from_text
+      - type: custom
 
-  traffic_aware:
-    type: bool
-    influence_conversation: true
+  user_latitude:
+    type: float
+    influence_conversation: false
     mappings:
-      - type: from_intent
-        intent: traffic_info
-        value: true
+      - type: custom
+
+  user_longitude:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  charger_preference:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  speed_preference:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  battery_capacity:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  battery_charge_amount:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  average_car_output:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+
 
 responses:
   utter_greet:

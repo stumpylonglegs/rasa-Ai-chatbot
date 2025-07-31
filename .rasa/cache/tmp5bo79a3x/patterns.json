@@ -1,6 +1,0 @@
-[
-  {
-    "name": "place",
-    "pattern": "(\\bglenwaverly\\b|\\bvermount\\ south\\b|\\bferntree\\ gully\\b|\\bboxhill\\b|\\bmount\\ waverly\\b|\\bclayton\\b|\\bspringvale\\b|\\bdingly\\b|\\bdoveton\\b|\\bringwood\\b)"
-  }
-]

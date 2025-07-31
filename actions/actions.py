@@ -7,7 +7,7 @@
 import arrow
 import dateparser
 from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet, SessionStarted, ActionExecuted
+from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
 from backend.find_station import find_station
@@ -41,14 +41,7 @@ import pandas as pd
 
 
 
-location_of_station = ""
-user_latidude = 0
-user_longitude = 0
-charger_preference = []
-speed_preference = []
-battery_capacity = 0
-battery_charge_amount = []
-average_car_output = 0
+
 
 
 
@@ -77,6 +70,8 @@ class ActionGetNearestStation(Action):
 
             dispatcher.utter_message(text="I am fetching the nearest station information.")
             result = find_station(user_location)
+            location_of_station = str(result['Address'])
+            dispatcher.utter_message(location_of_station)
 
             if result:            
                 
@@ -86,13 +81,15 @@ class ActionGetNearestStation(Action):
                 dispatcher.utter_message(text=f"This will take you about {result['ETA']} minutes")
                 dispatcher.utter_message("Would you like directions?")
                 
-                return [SlotSet("Charger Name", result['Address'])] 
+               
+                
+                return [SlotSet("Charger Name", result['Address']), SlotSet("location_of_station", location_of_station)] 
             else:
                 dispatcher.utter_message("Sorry, no charger is currently available in your location")
         else:
             # No location available
             dispatcher.utter_message("Sorry, I couldn't retrieve your location.")
-            return []
+            return [SlotSet("location_of_station", location_of_station)]
     
 
 class ActionToChargingStation(Action):
@@ -244,9 +241,8 @@ class ActionChargerInfo(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-
-
-        if location_of_station == "":
+        location_of_station = tracker.get_slot("location_of_station")
+        if not location_of_station:
             dispatcher.utter_message(text="please tell us a location you would like information for!!")
             return []
 
@@ -305,7 +301,7 @@ class ActionDefaultFallback(Action):
         user_location = (longitude, latitude)
 
         result = find_station(user_location)
-        dispatcher.utter_message(text=f"Your closest charging station is {result['Instructions']}")
+        dispatcher.utter_message(f"Your closest charging station is {result['Instructions']}")
         
         if "Instructions" in result:
             print("\nInstructions:")
