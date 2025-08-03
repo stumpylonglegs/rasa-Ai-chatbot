@@ -127,7 +127,6 @@ class ActionToChargingStation(Action):
         user_location = (longitude, latitude,)
         if station:
 
-
             station_name = station[0]  
             dispatcher.utter_message(text=f"I understand. Taking you to the {station_name} charging station.")
             result = get_route_details(user_location, destination)
