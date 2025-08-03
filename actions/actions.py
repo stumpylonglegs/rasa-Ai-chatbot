@@ -14,7 +14,8 @@ from backend.find_station import find_station
 from backend.find_station import get_route_details
 from backend.find_station import get_charging_station_availability
 import pandas as pd
-
+import csv 
+import math
 
 
 
@@ -119,6 +120,7 @@ class ActionToChargingStation(Action):
         station_info = charging_station.iloc[0]
         
         destination = (station_info['longitude'], station_info['latitude'])
+        destination_reversed = (station_info['latitude'], station_info['longitude'])
        
         
     
@@ -129,13 +131,20 @@ class ActionToChargingStation(Action):
             station_name = station[0]  
             dispatcher.utter_message(text=f"I understand. Taking you to the {station_name} charging station.")
             result = get_route_details(user_location, destination)
+          
+            
+            with open("datasets/ml_ev_charging_dataset.csv", "r") as file:
+                reader = csv.reader(file)
 
-            if result:
-                    directions = result["instructions"]
-                    for step in directions:
-                     dispatcher.utter_message(text=(step))
-            else:
-                print("Could not retrieve route directions.")
+                for row in file:
+                    if str(row[4]) == str(destination_reversed):
+                        return[SlotSet("location_of_station", row[4])]
+                else:
+                    print("no match")
+            
+
+
+           
             
             
 
@@ -158,8 +167,26 @@ class ActionToChargingStation(Action):
     
 
        
+
+class ActionDistanceICanGo(Action):
+
+    def name(self) -> Text:
+        return "Action_direction" 
+
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+
+
+      #if result:
+                    #directions = result["instructions"]
+                    #for step in directions:
+                    # dispatcher.utter_message(text=(step))
+            #else:
+                #print("Could not retrieve route directions.")
     
     
+     return []
 
 
 
@@ -171,8 +198,16 @@ class ActionHowLongToCharge(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message(text="It takes 20hr on slow, 12hr on 7kw fast, 7hr on 22kw fast, 1 hr on 43-50kw rapid, 30min on 150kw charge")
+        #all in kwh
+        capacity = 100
+        charge_rate = 5
+        bat_charge = 0
         
+        capacity_to_charge = capacity - (capacity * bat_charge)
+        charge_time = capacity_to_charge/(charge_rate * 0.9)
+        min, hour = math.modf(charge_time)
+        min = round(min * 60)
+        dispatcher.utter_message(text=f"it will take {int(hour)}hr {min}m to charge")
         
         return []
     
@@ -183,9 +218,18 @@ class ActionDistanceICanGo(Action):
     
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        #kwh
+        capacity = 100
+        #kwh/kelomity 
+        consumption = 0.12
 
-        dispatcher.utter_message(text="depending on your car and driving style. you can expect between. 320 to 480km on a full charge")
-        
+
+        bat_charge = 0.5
+        capacity_to_charge = capacity - (capacity * bat_charge)
+        distance = capacity/consumption
+
+
+        dispatcher.utter_message(text=f"you have about {distance}km before empty")
         
         return []
 
