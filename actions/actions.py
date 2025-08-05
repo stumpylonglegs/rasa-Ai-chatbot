@@ -58,6 +58,7 @@ class ActionGetNearestStation(Action):
         latitude = metadata.get("lat")
         longitude = metadata.get("lon")
 
+
         if not latitude and not longitude:
             latitude = -37.85580046992546
             longitude = 145.08025857057336
