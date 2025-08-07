@@ -197,6 +197,22 @@ nlu:
     - can i have specification for this charger
     - i need specs for this charging station. 
     - is it possible to know what speed this charger goes at 
+    - information please
+    - information thanks
+    - i would like infomation 
+    - could i have more information
+    - more infomation please
+
+- intent: directions
+  examples: |
+    - yes i would like direction
+    - directions please
+    - directions
+    - yes direction
+    - i would like directions
+    - the directions
+
+
 
 
 

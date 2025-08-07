@@ -18,6 +18,7 @@ intents:
   - ask_for_nearest_station
   - ask_To_Station
   - Ask_How_Long_To_Charge
+  - directions
 
 slots:
   location:
@@ -51,6 +52,17 @@ slots:
     mappings:
       - type: custom
 
+  station_latitude:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+    
+  station_longitude:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
   charger_preference:
     type: list
     influence_conversation: false
