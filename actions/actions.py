@@ -297,43 +297,27 @@ class ActionChargerInfo(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        location_of_station = tracker.get_slot("location_of_station")
-        if not location_of_station:
+        charge_location_lat = tracker.get_slot("station_latitude")
+        charge_location_long = tracker.get_slot("station_longitude")
+
+        if not charge_location_lat:
             dispatcher.utter_message(text="please tell us either a location or nearest location.")
             return []
 
-
-
-        df = pd.read_csv("datasets/charger_info_mel.csv")
-        df = df.astype(str)
-        address = tracker.get_slot("Charger Name")
         
-        
-        
-        dispatcher.utter_message(text="Sure, here are important information about the charging station.")
-        
-        
-        charging_station = df[df["Address"].str.strip().str.lower() == address.strip().lower()]
-        print(address)
-        print(address)
-        print(address)
-        print(charging_station)
-            
-        if not charging_station.empty:
-            station_info = charging_station.iloc[0]  
 
-            dispatcher.utter_message(text=f"Suburb: {station_info['City']}")
-            dispatcher.utter_message(text=f"Power output: {station_info['Power (kW)']} kW")
-            dispatcher.utter_message(text=f"Usage costs: {station_info['Usage Cost']}")
-            dispatcher.utter_message(text=f"Total charges: {station_info['Number of Points']}")
-            dispatcher.utter_message(text=f"Connection type: {station_info['Connection Types']}")
+        with open("datasets/charger_info_mel.csv", "r") as file:
+            reader = csv.reader(file)
 
-
-            dispatcher.utter_message(text=f"would you like direction to this charging station")
-            #get_charging_station_availability()
-        else:
-            dispatcher.utter_message(text=f"sorry we are unable to get details from the {address} charging station")
-            
+            for row in reader:
+                if row[9] == charge_location_lat and row[10] == charge_location_long:
+                    dispatcher.utter_message(text="here is information about this charging startion.")
+                    dispatcher.utter_message(text=f"power output {row[5]}")
+                    dispatcher.utter_message(text=f"usage cost {row[6]}")
+                    dispatcher.utter_message(text=f"number of chargers {row[7]}")
+                    dispatcher.utter_message(text=f"connection types {row[8]}")
+                else: 
+                    dispatcher.utter_message(text="Sorry we dont have the required data for this charging station.")      
         
         return []
     
