@@ -286,9 +286,7 @@ class ActionDefaultFallback(Action):
     
 
 
-    #______________________________________
-    #rewrite charger info with updated get info logic and charger lat long coors. see get local and to charg iong station
-    #______________________________________
+   
 
 class ActionChargerInfo(Action):
 
